@@ -92,10 +92,14 @@ public class TransactionalCache implements Cache {
     entriesToAddOnCommit.clear();
   }
 
+  /**
+   * 会话提交或关闭时调用
+   */
   public void commit() {
     if (clearOnCommit) {
       delegate.clear();
     }
+    // 保存二级缓存
     flushPendingEntries();
     reset();
   }

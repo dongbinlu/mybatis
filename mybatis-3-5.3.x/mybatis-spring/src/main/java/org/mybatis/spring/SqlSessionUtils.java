@@ -1,5 +1,5 @@
 /**
- * Copyright ${license.git.copyrightYears} the original author or authors.
+ * Copyright 2010-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,7 +90,7 @@ public final class SqlSessionUtils {
    */
   /**
    * 方法实现说明:获取我们的session对象
-   * 
+   *
    * @author:xsls
    * @param sessionFactory:session工厂对象
    * @param executorType:执行器类型
@@ -106,6 +106,7 @@ public final class SqlSessionUtils {
     notNull(sessionFactory, NO_SQL_SESSION_FACTORY_SPECIFIED);
     notNull(executorType, NO_EXECUTOR_TYPE_SPECIFIED);
     /**
+     * 注意此时，如果在service上添加@Transactional注解，此时会获取到SqlSessionHolder,因为走的是spring的事务，详见userService.getUser2(1)从这里断点进入
      * 首先就去我们事务同步管理器对象中获取我们的sessionHolder
      */
     SqlSessionHolder holder = (SqlSessionHolder) TransactionSynchronizationManager.getResource(sessionFactory);
@@ -182,7 +183,7 @@ public final class SqlSessionUtils {
 
   /**
    * 方法实现说明
-   * 
+   *
    * @author:xsls
    * @param executorType:执行器类型
    * @return:

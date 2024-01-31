@@ -1,4 +1,9 @@
-com\tuling\mapper\UserMapper.class
-com\tuling\plugins\ExamplePlugin.class
-com\tuling\entity\User.class
-com\tuling\App.class
+com/only/plugins/ExamplePlugin.class
+com/only/entity/User.class
+com/only/plugins/Page$PageBuilder.class
+com/only/plugins/PagePlugin$PageHandler.class
+com/only/plugins/PagePlugin.class
+com/only/plugins/Page.class
+com/only/test/MybatisApp.class
+com/only/entity/User$UserBuilder.class
+com/only/mapper/UserMapper.class

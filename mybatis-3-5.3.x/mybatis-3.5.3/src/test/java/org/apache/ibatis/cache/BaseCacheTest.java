@@ -43,6 +43,10 @@ class BaseCacheTest {
     assertEquals(cache.hashCode(), new LoggingCache(cache).hashCode());
     assertEquals(cache.hashCode(), new ScheduledCache(cache).hashCode());
 
+    /**
+     * HashSet是一个基于Hash表的集合，不允许重复元素。当多个对象存入HashSet时，
+     * 它会根据对象的哈希码（通过hashCode方法计算）和equals()方法判断是否为重复元素。
+     */
     Set<Cache> caches = new HashSet<>();
     caches.add(cache);
     caches.add(new SynchronizedCache(cache));

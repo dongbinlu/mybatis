@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--
+    在Spring框架中，`<context:annotation-config/>`是一个XML配置元素，用于启用对注解驱动的配置的支持。
+    通过使用这个配置元素，你可以告诉Spring容器去扫描并处理带有特定注解的类，以便自动配置它们。
+    具体来说，`<context:annotation-config/>`主要用于启用一些常见的注解驱动功能，包括但不限于以下几点：
+
+    1. **自动扫描：** Spring容器会自动扫描指定包下的类，寻找带有特定注解的类，例如`@Component`、`@Service`、`@Repository`等。被扫描到的类将被注册为Spring的bean。
+
+    2. **自动装配：** 通过`@Autowired`注解，Spring可以自动将相关依赖注入到需要的地方，而不需要显式地配置bean之间的依赖关系。
+
+    3. **JSR-250注解支持：** 支持使用JSR-250规范中的注解，如`@PostConstruct`和`@PreDestroy`等，用于在bean的生命周期中执行特定的初始化和销毁操作。
+
+    使用`<context:annotation-config/>`可以简化配置，减少显式配置的工作，使得开发者可以更专注于业务逻辑而不是过多的配置。
+    需要注意的是，如果你使用了`<context:component-scan>`元素，它已经包含了`<context:annotation-config/>`的功能，因此在这种情况下，你可能不需要显式地添加`<context:annotation-config/>`。
+    -->
+    <context:annotation-config/>
+
+    <!--
+    `<tx:annotation-driven/>` 是 Spring 框架中的一个 XML 配置元素，用于启用基于注解的事务管理支持。
+    通过使用这个配置元素，你可以告诉 Spring 框架去扫描并处理带有事务注解的类，以便自动管理这些类中的事务。
+
+    具体而言，`<tx:annotation-driven/>` 主要用于启用一些与事务管理相关的注解支持，其中最常见的注解是 `@Transactional`。
+    使用这个元素后，Spring 将会在运行时检测带有 `@Transactional` 注解的方法，并在方法调用前后执行事务管理的相关逻辑，包括事务的开始、提交、回滚等。
+
+    以下是 `<tx:annotation-driven/>` 主要的作用：
+
+    1. **自动事务管理：** 通过启用这个配置元素，Spring 将会自动为带有 `@Transactional` 注解的方法提供事务管理支持，无需手动配置事务管理器等相关的信息。
+
+    2. **事务属性的配置：** 支持在 `@Transactional` 注解中配置事务的属性，如隔离级别、传播行为、超时等，使得事务管理更加灵活。
+
+    使用 `<tx:annotation-driven/>` 可以简化配置，减少手动配置事务管理的工作，提高开发效率。
+    需要注意的是，为了正确使用该配置元素，确保在应用的类路径下包含了事务管理相关的依赖，比如数据库驱动、事务管理器等。
+    -->
+    <tx:annotation-driven/>
+
+    <!--
+    `<context:component-scan>` 是 Spring 框架中的一个 XML 配置元素，用于启用自动扫描并注册 Spring bean。
+    通过使用这个配置元素，你可以告诉 Spring 容器在指定的包或包路径下扫描类，并将带有特定注解的类注册为 Spring bean。
+
+    具体来说，`<context:component-scan>` 主要用于以下目的：
+
+    1. **自动扫描和注册组件：** Spring 容器会在指定的包或包路径下递归扫描所有类，寻找带有特定注解（如 `@Component`、`@Service`、`@Repository`、`@Controller` 等）的类，并将它们注册为 Spring 的组件。
+
+    2. **自动装配：** 注册为组件的类可以通过自动装配（`@Autowired` 注解）实现依赖注入，简化了手动配置 bean 之间的依赖关系的工作。
+
+    3. **注解驱动的配置：** 与其他注解驱动的配置元素（比如 `<context:annotation-config/>` 和 `<tx:annotation-driven/>`）配合使用，可以使 Spring 容器更智能地处理注解驱动的配置。
+
+    使用示例：
+
+    ```xml
+    <context:component-scan base-package="com.example"/>
+    ```
+
+    上述示例配置告诉 Spring 容器在包路径 `com.example` 下扫描所有类，并注册带有特定注解的类作为 Spring bean。
+
+    总体而言，`<context:component-scan>` 提供了一种便捷的方式来实现基于注解的组件化开发，减少了手动配置的工作。
+    需要注意的是，使用这个配置元素时，确保包路径是正确的，以确保 Spring 能够正确地找到并注册你的组件。
+    -->
+    <context:component-scan base-package="com.only.mybatis.spring.service"/>
+
+    <!--数据源配置-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <constructor-arg name="url" value="jdbc:mysql://127.0.0.1:3306/only"></constructor-arg>
+        <constructor-arg name="username" value="root"></constructor-arg>
+        <constructor-arg name="password" value="root"></constructor-arg>
+    </bean>
+
+    <!--事务管理器配置-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <!--SqlSessionFactoryBean配置-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+
+    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.only.mybatis.spring.mapper.UserMapper"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+
+</beans>

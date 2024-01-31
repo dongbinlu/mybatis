@@ -58,7 +58,9 @@ public class SimpleExecutor extends BaseExecutor {
     Statement stmt = null;
     try {
       Configuration configuration = ms.getConfiguration();
+      // 在生成StatementHandler对象时，进行动态代理处理，拦截sql语句处理器
       StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, resultHandler, boundSql);
+      // 执行分页必须在PrepareStatement对象生成前完成
       // 拿到连接和statement
       stmt = prepareStatement(handler, ms.getStatementLog());
       return handler.query(stmt, resultHandler);
@@ -84,6 +86,7 @@ public class SimpleExecutor extends BaseExecutor {
   private Statement prepareStatement(StatementHandler handler, Log statementLog) throws SQLException {
     Statement stmt;
     Connection connection = getConnection(statementLog);
+    // 就在这一步，执行prepare方法时，增加了分页参数
     stmt = handler.prepare(connection, transaction.getTimeout());
     // 处理参数
     handler.parameterize(stmt);
